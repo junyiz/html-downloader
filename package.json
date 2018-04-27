@@ -1,0 +1,25 @@
+{
+  "name": "html-downloader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "htmlDownloader.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/junyiz/html-downloader.git"
+  },
+  "keywords": [
+    "downloader"
+  ],
+  "author": "Junyi Zhang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/junyiz/html-downloader/issues"
+  },
+  "homepage": "https://github.com/junyiz/html-downloader#readme",
+  "dependencies": {
+    "iconv-lite": "^0.4.21"
+  }
+}
