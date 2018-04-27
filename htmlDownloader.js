@@ -18,6 +18,7 @@ function isRedirect(code) {
 module.exports = function htmlDownloader(url, timeout = 60 * 1000, retries = 2, redirect = 5) {
   return new Promise(function (resolve, reject) {
     function wrapper (url, timeout, retries, redirect) {
+      let isRetry = false
       const request = url.startsWith('https') ? https.request : http.request
       let req = request(url, res => {
         let buf = [], size = 0 
@@ -36,14 +37,16 @@ module.exports = function htmlDownloader(url, timeout = 60 * 1000, retries = 2, 
       req.setHeader('User-Agent', userAgent)
       req.setTimeout(timeout, () => {
         retries--
+        isRetry = true
         req.abort()
       })
       req.on('error', (err) => {
+        isRetry = true
         retries > 0 ? retries-- : reject(err)
       })
       req.on('close', () => {
         // 重试时，将超时时间递增 1 分钟
-        if (retries > 0) wrapper(url, timeout + 60 * 1000, retries, redirect)
+        if (isRetry && retries > 0) wrapper(url, timeout + 60 * 1000, retries, redirect)
       })
       req.end()
     }
